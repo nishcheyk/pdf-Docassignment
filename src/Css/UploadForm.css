@@ -1,0 +1,75 @@
+
+  /* Container */
+  .container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  /* Input Styling */
+  .file-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+
+  /* Buttons */
+  .button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .button.secondary {
+    background-color: #28a745;
+  }
+
+  .button.secondary:hover {
+    background-color: #1e7e34;
+  }
+
+  /* Loader */
+  .loader {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #333;
+  }
+
+  /* Display Extracted Data */
+  .result-box {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      width: 90%;
+      padding: 15px;
+    }
+
+    .button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }

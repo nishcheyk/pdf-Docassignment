@@ -1,0 +1,172 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Light Mode */
+:root {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-primary: #e8e8e8;
+    --color-secondary: #212121;
+    --muted: #b8b8b8;
+    --active-bar: black;
+    --scrolthumb:#7A73D1;
+    --scroltrack:#211C84;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --color-bg: #121212;
+    --color-text: #ffffff;
+    --color-primary: #333;
+    --color-secondary: #ffffff;
+    --muted: #383838;
+    --active-bar: white;
+  --scroltrack:#7A73D1;
+    --scrolthumb:#211C84;
+}
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 14px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background:var(--scroltrack) ; /* Track color */
+    border-radius: 10px;
+}
+::-webkit-scrollbar:horizontal {
+    display: none;
+}
+::-webkit-scrollbar-thumb {
+    background:var(--scrolthumb); /* Thumb color */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4D55CC; /* Thumb color on hover */
+}
+
+/* Apply Theme to Body */
+body {
+    overflow-y: none;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Navbar Container */
+.container {
+    background-color: var(--color-secondary);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+/* Navbar Items */
+.container .wrap {
+    display: flex;
+    align-items: center;
+    background: var(--color-primary);
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
+}
+
+/* Navigation Labels */
+.label {
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    padding: 12px 16px;
+    transition: color 0.25s ease, transform 0.2s ease-in-out;
+    position: relative;
+}
+
+/* Hover Effect - Slight Expand */
+.label:hover {
+    transform: scale(1.1);
+    color: var(--active-bar);
+}
+
+/* Active Navigation Label */
+.label.active {
+    color: var(--active-bar);
+    font-weight: bold;
+}
+
+/* Black Selection Bar */
+.bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100px; /* Default size */
+    background: var(--active-bar);
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* Dynamic Positioning for Active Tab */
+.label:nth-child(1).active ~ .bar {
+    transform: translateX(0%);
+    width: 90px;
+}
+
+.label:nth-child(2).active ~ .bar {
+    transform: translateX(65%);
+    width: 160px;
+}
+
+.label:nth-child(3).active ~ .bar {
+    transform: translateX(230%);
+    width: 130px;
+}
+
+/* Theme Toggle */
+.container .theme {
+    color: var(--color-secondary);
+    background-color: var(--color-primary);
+    cursor: pointer;
+    border: 1px solid var(--muted);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+/* Show Sun in Dark Mode and Moon in Light Mode */
+[data-theme="dark"] .theme .light,
+[data-theme="light"] .theme .dark {
+    display: inline;
+}
+
+/* Logout & Login Buttons */
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.login-btn {
+    background-color: #2ecc71;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.login-btn:hover {
+    background-color: #27ae60;
+    transform: scale(1.05);
+}
