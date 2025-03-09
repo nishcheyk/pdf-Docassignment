@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { saveAs } from "file-saver";
 import Mammoth from "mammoth";
@@ -7,18 +7,15 @@ import "react-quill/dist/quill.snow.css";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { Box, Button, Card, CardContent, Divider, Typography, TextField } from "@mui/material";
 import Tinymce from "./tinymce";
+import beautify from "js-beautify";
 
 const DocumentEditor = () => {
     const [documentText, setDocumentText] = useState("");
-    const [editorMode, setEditorMode] = useState("basic");
+    const [editorMode, setEditorMode] = useState("basic"); // Modes: "basic", "html", "advanced"
 
-    const formatHTML = (html) => {
-        return html.replace(/>(?=[^\n])/g, ">\n").trim();
+    const formatHtml = (html) => {
+        return beautify.html(html, { indent_size: 2, wrap_line_length: 0 });
     };
-
-    useEffect(() => {
-        setDocumentText((prev) => formatHTML(prev));
-    }, []);
 
     const handleFileUpload = async (file) => {
         if (!file || !file.name.endsWith(".docx")) {
@@ -29,7 +26,7 @@ const DocumentEditor = () => {
         reader.onload = async (e) => {
             const arrayBuffer = e.target.result;
             const result = await Mammoth.convertToHtml({ arrayBuffer });
-            setDocumentText(formatHTML(result.value));
+            setDocumentText(formatHtml(result.value)); // Format HTML on upload
         };
         reader.readAsArrayBuffer(file);
     };
@@ -53,7 +50,7 @@ const DocumentEditor = () => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", height: "190vh", padding: "20px", gap: "20px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", padding: "20px", gap: "20px" }}>
             <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <Typography>Choose Editor Mode:</Typography>
                 <Button variant={editorMode === "basic" ? "contained" : "outlined"} onClick={() => setEditorMode("basic")}>BASIC</Button>
@@ -61,12 +58,13 @@ const DocumentEditor = () => {
                 <Button variant={editorMode === "advanced" ? "contained" : "outlined"} onClick={() => setEditorMode("advanced")}>Advanced</Button>
             </Box>
 
-            <Card sx={{ borderRadius: "10px", boxShadow: 3, height: "50vh", maxHeight: "600px" }}>
+            <Card sx={{ borderRadius: "10px", boxShadow: 3, height: "70vh", maxHeight: "600px" }}>
                 <CardContent>
                     <Typography variant="h6">Upload and Edit Document</Typography>
                     <Divider />
                     <Box {...getRootProps()} sx={{
                         marginTop: "10px", padding: "20px", border: "2px dashed #aaa",
+                        borderRadius: "10px", textAlign: "center", cursor: "pointer",
                         backgroundColor: isDragActive ? "#e3f2fd" : "#fafafa",
                     }}>
                         <input {...getInputProps()} />
@@ -81,51 +79,44 @@ const DocumentEditor = () => {
             </Button>
 
             <Card sx={{
-    borderRadius: "10px",
-    boxShadow: 3,
-    height: { xs: "140vh", sm: "170vh", md: "190vh", lg: "210vh" }, // Increased height
-    maxHeight: "2200px", // Increased max height
-
-    mb: "50px" // Bottom margin for spacing
-}}>
-
-              <CardContent sx={{
-    borderRadius: "10px",
-    boxShadow: 3,
-    height: { xs: "130vh", sm: "160vh", md: "180vh", lg: "200vh" }, // Increased height
-    display: "flex",
-    flexDirection: editorMode === "html" ? "row" : "column",
-    gap: "20px"
-}}>
-
+                borderRadius: "10px",
+                boxShadow: 3,
+                height: { xs: "95vh", sm: "115vh", md: "125vh", lg: "135vh" },
+                maxHeight: "900px",
+                overflowY: "hidden"
+            }}>
+                <CardContent sx={{
+                    borderRadius: "10px",
+                    boxShadow: 3,
+                    height: { xs: "90vh", sm: "110vh", md: "120vh", lg: "130vh" },
+                    display: "flex",
+                    flexDirection: editorMode === "html" ? "row" : "column",
+                    gap: "20px"
+                }}>
                     <Box sx={{ flex: 1 }}>
                         <Typography variant="h6">Edit Document</Typography>
                         <Divider />
 
-                        {/* HTML Mode: Raw Text Editor */}
                         {editorMode === "html" && (
                             <TextField
                                 multiline
-                                rows={20} // Increased rows for better space
+                                rows={15}
                                 fullWidth
                                 value={documentText}
-                                onChange={(e) => setDocumentText(formatHTML(e.target.value))}
-                                sx={{ marginTop: "10px", fontFamily: "monospace" }}
+                                onChange={(e) => setDocumentText(formatHtml(e.target.value))}
+                                sx={{ marginTop: "10px" }}
                             />
                         )}
 
-                        {/* Basic Mode: WYSIWYG Editor (ReactQuill) */}
                         {editorMode === "basic" && (
-                            <ReactQuill value={documentText} onChange={setDocumentText} theme="snow" style={{ height: "400px" }} />
+                            <ReactQuill value={documentText} onChange={setDocumentText} theme="snow" style={{ height: "300px" }} />
                         )}
 
-                        {/* Advanced Mode: TinyMCE Editor */}
                         {editorMode === "advanced" && (
                             <Tinymce value={documentText} onChange={setDocumentText} />
                         )}
                     </Box>
 
-                    {/* Live Preview for HTML Mode */}
                     {editorMode === "html" && (
                         <Box sx={{
                             flex: 1,
@@ -139,7 +130,7 @@ const DocumentEditor = () => {
                         }}>
                             <Typography variant="h6">Live Preview</Typography>
                             <Divider />
-                            <Box sx={{ marginTop: "10px", padding: "10px", minHeight: "95%" }} dangerouslySetInnerHTML={{ __html: documentText }} />
+                            <Box sx={{ marginTop: "10px", padding: "10px", minHeight: "85%" }} dangerouslySetInnerHTML={{ __html: documentText }} />
                         </Box>
                     )}
                 </CardContent>

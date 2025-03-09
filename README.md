@@ -1,124 +1,70 @@
-# Documentation Modifier
+# Getting Started with Create React App
 
-## Project Description
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Documentation Modifier is a MERN stack application that provides a seamless way to modify DOCX files using three different methods and extract tables from PDFs. The project includes a user authentication system with login and signup functionalities optimized to use a single function for handling both. The authentication is powered by JWT tokens and includes backend restrictions to prevent account creation with the same email.
+## Available Scripts
 
-For PDF processing, users can upload PDF files, which are then processed in the backend to extract tables using `pdf2table` and stored as JSON arrays in MongoDB. The extracted data is then displayed in a tabular format on the frontend.
+In the project directory, you can run:
 
-For document editing, users can modify DOCX files using:
+### `npm start`
 
-1. **HTML Tags Editor** - Provides a live preview while editing.
-2. **Provides a user-friendly error page with a recommendation to navigate to a random routeReact Quill** - A basic text editor.
-3. **TinyMCE** - An advanced text editor.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The system also supports downloading modified DOCX files.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-Additionally, the frontend is designed with an intuitive and visually appealing UI, ensuring a seamless user experience with smooth interactions and responsive design.
+### `npm test`
 
-## Setup Instructions
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Prerequisites
+### `npm run build`
 
-- Node.js
-- MongoDB
-- npm or yarn
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Installation & Running the Project
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-1. Clone the repository:
-   ```sh
-   git clone <repository-url>
-   cd documentation-modifier
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Configure environment variables in a `.env` file:
-   ```sh
-   MONGO_URI=<your-mongodb-uri>
-   JWT_SECRET=<your-secret-key>
-   ```
-4. Start the frontend:
-   ```sh
-   npm start
-   ```
-5. Start the backend server:
-   ```sh
-   cd server
-   npm install
-   node server.js
-   ```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Features Implemented
+### `npm run eject`
 
-- **User Authentication:**
-  - Login, Signup, and Logout using JWT authentication
-  - Optimized to use a single function for both login and signup
-  - Backend restriction to prevent duplicate email registrations
-- **PDF Table Extraction:**
-  - Users can upload PDFs, and the system extracts tabular data
-  - Data is stored in MongoDB as a JSON array and displayed in tabular form
-- **DOCX Modification:**
-  - HTML-based live editing
-  - React Quill for basic editing
-  - TinyMCE for advanced editing
-  - Download functionality for edited DOCX files
-- **Amazing Frontend Design:**
-  - Modern, intuitive UI
-  - Responsive layout for seamless user experience
-  - Smooth interactions for better usability
-- **Dark and Light Mode:**
-  - Users can toggle between dark mode and light mode for better accessibility
-- **Custom 404 Error Page:**
-  - Provides a user-friendly error page 
-- **Custom Scrollbar:**
-  - Enhanced UI experience with a styled scrollbar
-- **MUI Components:**
-  - Implemented Material UI for a more polished and interactive user interface
-- **Navigation Bar:**
-  - Responsive navbar with seamless routing and improved accessibility
-#Glims of project 
-![image](https://github.com/user-attachments/assets/b74c0040-49ac-4fb3-9931-c5979b4a8c94)
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-## Technologies Used
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-- **Frontend:** React, React Quill, TinyMCE, Material UI (MUI), HTML, CSS, TailwindCSS
-- **Backend:** Node.js, Express, Multer, pdf2table, Mongoose, JWT
-- **Database:** MongoDB
-- **Other Tools:** fs, path, dotenv
-![image](https://github.com/user-attachments/assets/ef1bb5f5-1536-43d3-806b-e572ed946fa7)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-## Challenges Faced and Solutions
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-- **Optimizing Authentication Logic:**
-  - Solution: Used a single function to handle both login and signup, reducing redundancy.
-- **Backend Restriction for Email Duplication:**
-  - Solution: Implemented email uniqueness validation to prevent multiple accounts with the same email.
-- **PDF Table Extraction Accuracy:**
-  - Solution: Utilized `pdf2table` and ensured correct JSON formatting before storing in MongoDB.
-- **Efficient DOCX Editing:**
-  - Solution: Provided three different ways to edit DOCX files, giving users flexibility based on their needs.
-- **Responsive Design Implementation:**
-  - Solution: Used TailwindCSS and Material UI to ensure adaptability across devices.
-    
-![image](https://github.com/user-attachments/assets/6d682fab-4531-4e6c-9548-d165b1207c86)
+## Learn More
 
-## Assumptions Made
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-- PDF files contain well-structured tables that `pdf2table` can extract.
-- Users prefer different levels of document editing, hence the three different editors.
-- JWT-based authentication is sufficient for securing the application.
-  ![image](https://github.com/user-attachments/assets/75fd2970-2fe5-4bdc-a00b-f953dd701690)
+To learn React, check out the [React documentation](https://reactjs.org/).
 
+### Code Splitting
 
-## Future Improvements
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-- Add support for more document formats (e.g., XLSX, PPTX)
-- Enhance PDF extraction for more complex table structures
-- Implement role-based authentication for document access control
-- **Data Analysis Integration** to provide insights from extracted data
-- **Email OTP Verification** using NodeMailer or Email.js for enhanced security
-- **Further UI Enhancements** with animations and interactive components
+### Analyzing the Bundle Size
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
