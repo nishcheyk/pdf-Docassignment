@@ -13,6 +13,8 @@ import {
   Divider,
   Typography,
   TextField,
+  CircularProgress,
+  Backdrop,
 } from "@mui/material";
 import Tinymce from "./tinymce";
 import beautify from "js-beautify";
@@ -20,30 +22,51 @@ import beautify from "js-beautify";
 const DocumentEditor = () => {
   const [documentText, setDocumentText] = useState("");
   const [editorMode, setEditorMode] = useState("basic"); // Modes: "basic", "html", "advanced"
+  const [loading, setLoading] = useState(false); // <- loading state
 
   const formatHtml = (html) => {
     return beautify.html(html, { indent_size: 2, wrap_line_length: 0 });
   };
 
-  const handleFileUpload = async (file) => {
+  const handleFileUpload = useCallback(async (file) => {
     if (!file || !file.name.endsWith(".docx")) {
       alert("Please upload a valid .docx file!");
       return;
     }
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const arrayBuffer = e.target.result;
-      const result = await Mammoth.convertToHtml({ arrayBuffer });
-      setDocumentText(formatHtml(result.value)); // Format HTML on upload
-    };
-    reader.readAsArrayBuffer(file);
-  };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      handleFileUpload(acceptedFiles[0]);
+    try {
+      setLoading(true); // Start loader
+      const reader = new FileReader();
+
+      reader.onload = async (e) => {
+        const arrayBuffer = e.target.result;
+
+        try {
+          const result = await Mammoth.convertToHtml({ arrayBuffer });
+          setDocumentText(formatHtml(result.value));
+        } catch (error) {
+          console.error("Error converting file:", error);
+          alert("Failed to process the document.");
+        } finally {
+          setLoading(false); // Stop loader
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+    } catch (error) {
+      console.error("File reading error:", error);
+      setLoading(false);
     }
   }, []);
+
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length > 0) {
+        handleFileUpload(acceptedFiles[0]);
+      }
+    },
+    [handleFileUpload]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -69,23 +92,31 @@ const DocumentEditor = () => {
         gap: "20px",
       }}
     >
+      {/* Loader Overlay */}
+      <Backdrop sx={{ color: "#fff", zIndex: 9999 }} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
         <Typography>Choose Editor Mode:</Typography>
         <Button
           variant={editorMode === "basic" ? "contained" : "outlined"}
           onClick={() => setEditorMode("basic")}
+          disabled={loading}
         >
           BASIC
         </Button>
         <Button
           variant={editorMode === "html" ? "contained" : "outlined"}
           onClick={() => setEditorMode("html")}
+          disabled={loading}
         >
           HTML
         </Button>
         <Button
           variant={editorMode === "advanced" ? "contained" : "outlined"}
           onClick={() => setEditorMode("advanced")}
+          disabled={loading}
         >
           Advanced
         </Button>
@@ -110,11 +141,12 @@ const DocumentEditor = () => {
               border: "2px dashed #aaa",
               borderRadius: "10px",
               textAlign: "center",
-              cursor: "pointer",
+              cursor: loading ? "not-allowed" : "pointer",
               backgroundColor: isDragActive ? "#e3f2fd" : "#fafafa",
+              opacity: loading ? 0.6 : 1,
             }}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} disabled={loading} />
             <Typography>
               {isDragActive
                 ? "Drop the file here..."
@@ -126,6 +158,7 @@ const DocumentEditor = () => {
             accept=".docx"
             onChange={(e) => handleFileUpload(e.target.files[0])}
             style={{ marginTop: "10px" }}
+            disabled={loading}
           />
         </CardContent>
       </Card>
@@ -135,6 +168,7 @@ const DocumentEditor = () => {
         color="secondary"
         onClick={saveEditedDocx}
         sx={{ marginTop: "25px", width: "100%" }}
+        disabled={loading}
       >
         Download Edited DOCX
       </Button>
@@ -170,6 +204,7 @@ const DocumentEditor = () => {
                 value={documentText}
                 onChange={(e) => setDocumentText(formatHtml(e.target.value))}
                 sx={{ marginTop: "10px", minHeight: "300px", height: "auto" }}
+                disabled={loading}
               />
             )}
 
@@ -191,13 +226,17 @@ const DocumentEditor = () => {
                     minHeight: "300px",
                     maxHeight: "60vh",
                     overflowY: "auto",
+                    opacity: loading ? 0.6 : 1,
                   }}
+                  readOnly={loading}
                 />
               </Box>
             )}
 
             {editorMode === "advanced" && (
-              <Tinymce value={documentText} onChange={setDocumentText} />
+              <Box sx={{ marginTop: "10px", minHeight: "600px", height: "auto" }}>
+                <Tinymce value={documentText} onChange={setDocumentText} disabled={loading} />
+              </Box>
             )}
           </Box>
 
@@ -211,8 +250,9 @@ const DocumentEditor = () => {
                 backgroundColor: "#fff",
                 boxShadow: 3,
                 height: "auto",
-                overflowY: "auto", // Scroll if content is large
-                maxHeight: "600px", // Optional: Limit max height
+                overflowY: "auto",
+                maxHeight: "600px",
+                opacity: loading ? 0.6 : 1,
               }}
             >
               <Typography variant="h6">Live Preview</Typography>
