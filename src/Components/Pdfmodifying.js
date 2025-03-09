@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FaFileUpload } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -23,7 +22,7 @@ const PDFUpload = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
