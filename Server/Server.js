@@ -9,7 +9,9 @@ const pdfRoutes = require("./Routes/pdfRoutes");
 
 dotenv.config();
 const app = express();
-app.use(cors());
+ cors app.use(cors({
+  origin: "*"
+}));
 app.use(bodyParser.json());
 
 // MongoDB Connection
