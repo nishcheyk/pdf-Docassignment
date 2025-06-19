@@ -3,7 +3,7 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const pdf2table = require("pdf2table");
-const PdfData = require("../models/pdfData");
+const PdfData = require("../Models/pdfData");
 
 const router = express.Router();
 
