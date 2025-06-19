@@ -9,7 +9,7 @@ const pdfRoutes = require("./Routes/pdfRoutes");
 
 dotenv.config();
 const app = express();
- cors app.use(cors({
+app.use(cors({
   origin: "*"
 }));
 app.use(bodyParser.json());
