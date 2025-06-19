@@ -16,7 +16,7 @@ const Auth = () => {
       const endpoint = isRegistering ? "register" : "login";
       const payload = isRegistering ? { name, email, password } : { email, password };
       const response = await axios.post(
-        `http://localhost:5000/auth/${endpoint}`,
+        `https://pdf-docback.onrender.com/auth/${endpoint}`,
         payload
       );
       if (isRegistering) {

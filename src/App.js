@@ -4,12 +4,8 @@ import { AuthContext } from "./context/authContext";
 import RequiredAuth from "./util/authRoutes";
 import Login from "./Pages/Login";
 import HomePage from "./Pages/Home";
-// import DocumentEditor from "./Components/documentEditor";
-import Tinymce from "./Components/tinymce";
 import PDFUpload from "./Pages/PDFUpload";
 import DocumentEditor from "./Pages/DocumentEditor";
-
-// import { Editor } from "./Components/Editor";
 import Error404 from "./Pages/Error404";
 
 function App() {

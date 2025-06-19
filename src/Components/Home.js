@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, Paper, Grid, Card, CardContent, Button } from "@mui/material";
-import { AuthContext } from "../context/authContext";
-import NavBar from "../Components/Navbar";
 
 const HomePage = () => {
   const navigate = useNavigate();

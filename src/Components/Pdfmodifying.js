@@ -51,7 +51,7 @@ const PDFUpload = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:5000/pdf/upload", formData, {
+      const response = await axios.post("https://pdf-docback.onrender.com/pdf/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
